@@ -1,16 +1,16 @@
-refs ={
+const refs ={
     buttonStart: document.querySelector('button[data-start]'),
     buttonStop: document.querySelector('button[data-stop]'),
     bodyElement: document.querySelector('body'),
     buttons:  document.querySelectorAll('button'),
 };
+let colorChange=null; 
 
 refs.buttonStart.addEventListener('click', onButtonStart);
 refs.buttonStop.addEventListener('click', onButtonStop);
 
 function onButtonStart(){
-    console.log('hi');
-  refs.buttonStart.disabled=true;
+   refs.buttonStart.disabled=true;
     colorChange=setInterval(()=>{
 refs.bodyElement.style.backgroundColor = getRandomHexColor()},1000);
 }
