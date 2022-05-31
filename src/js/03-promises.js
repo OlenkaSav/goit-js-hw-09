@@ -14,9 +14,9 @@ function onFormSubmit(evt){
     evt.preventDefault();
     refs.btnStart.disabled=true;
     let positionNumber=0;
-  const delayValue = Number(refs.inputDelay.value)*1000;
+  const delayValue = Number(refs.inputDelay.value);
   const positionAmount =Number(refs.inputAmount.value);
-  const stapValue = Number(refs.inputStap.value)*1000;
+  const stapValue = Number(refs.inputStap.value);
   let intervalToShow=delayValue;
  
   const intervalId=setInterval(()=>{
@@ -25,8 +25,8 @@ function onFormSubmit(evt){
      return;
     } else{
       positionNumber+=1;
+      createPromise(positionNumber, delayValue, intervalToShow).then(onPromiseresolve).catch(onPromiseReject);
       intervalToShow+=stapValue;
-     createPromise(positionNumber, delayValue, intervalToShow).then(onPromiseresolve).catch(onPromiseReject);
      }
      }, stapValue);
   setTimeout(()=>{refs.btnStart.disabled=false;
