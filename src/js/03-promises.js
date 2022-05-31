@@ -13,22 +13,22 @@ refs.form.addEventListener('submit', onFormSubmit);
 function onFormSubmit(evt){
     evt.preventDefault();
     refs.btnStart.disabled=true;
-    let positionNumber=1;
+    let positionNumber=0;
   const delayValue = Number(refs.inputDelay.value)*1000;
   const positionAmount =Number(refs.inputAmount.value);
   const stapValue = Number(refs.inputStap.value)*1000;
   let intervalToShow=delayValue;
  
   const intervalId=setInterval(()=>{
-    if (positionNumber>positionAmount){
+    if (positionNumber>=positionAmount){
      clearInterval(intervalId);
      return;
     } else{
+      positionNumber+=1;
+      intervalToShow+=stapValue;
      createPromise(positionNumber, delayValue, intervalToShow).then(onPromiseresolve).catch(onPromiseReject);
-     positionNumber+=1;
-  intervalToShow+=stapValue;
-    }
-  }, stapValue);
+     }
+     }, stapValue);
   setTimeout(()=>{refs.btnStart.disabled=false;
   },btnDisabledTime(delayValue, positionAmount, stapValue));
   }
@@ -43,6 +43,7 @@ function createPromise(position, delay, interval) {
         reject(`❌ Rejected promise ${position} in ${interval}ms`);
       }
     }, delay);
+
 })}
 
 function onPromiseresolve(result){
@@ -53,6 +54,6 @@ function onPromiseReject(error){
   Notiflix.Notify.failure(error, {position: 'center-top', timeout: 5000,});
 }
 
-function btnDisabledTime(delay, amount, stap){
-return delay+amount*stap+5000;
+function btnDisabledTime(delay, amount, step){
+return delay+amount*step+5000;
 }
